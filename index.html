@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institut Cardinal Etsou - Gestion des Inscriptions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Page d'authentification -->
+        <div id="login-page" class="page active">
+            <div class="auth-container">
+                <div class="school-logo">
+                    <h1>Institut Cardinal Etsou</h1>
+                    <p>Gestion des Inscriptions</p>
+                </div>
+                <form id="login-form" class="auth-form">
+                    <h2>Connexion</h2>
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Mot de passe" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Se connecter</button>
+                    <p class="auth-switch">Pas de compte? <a href="#" onclick="showRegister()">S'inscrire</a></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page d'enregistrement -->
+        <div id="register-page" class="page">
+            <div class="auth-container">
+                <form id="register-form" class="auth-form">
+                    <h2>Créer un compte</h2>
+                    <div class="form-group">
+                        <input type="text" id="reg-username" placeholder="Nom d'utilisateur" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="reg-email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="reg-password" placeholder="Mot de passe" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="reg-confirm-password" placeholder="Confirmer le mot de passe" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Créer le compte</button>
+                    <p class="auth-switch">Déjà un compte? <a href="#" onclick="showLogin()">Se connecter</a></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page d'accueil -->
+        <div id="home-page" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h2>Institut Cardinal Etsou</h2>
+                </div>
+                <div class="nav-menu">
+                    <button onclick="showInscription()" class="btn-nav">Nouvelle inscription</button>
+                    <button onclick="showListeInscrits()" class="btn-nav">Voir les inscrits</button>
+                    <button onclick="logout()" class="btn-nav btn-logout">Déconnexion</button>
+                </div>
+            </nav>
+            
+            <div class="home-content">
+                <div class="welcome-section">
+                    <h1>Bienvenue dans le système de gestion des inscriptions</h1>
+                    <p>Choisissez une action dans le menu ci-dessus</p>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3 id="total-inscriptions">0</h3>
+                        <p>Total Inscriptions</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="pending-inscriptions">0</h3>
+                        <p>En attente</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="confirmed-inscriptions">0</h3>
+                        <p>Confirmées</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page d'inscription -->
+        <div id="inscription-page" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h2>Nouvelle Inscription</h2>
+                </div>
+                <div class="nav-menu">
+                    <button onclick="showHome()" class="btn-nav">Retour</button>
+                </div>
+            </nav>
+            
+            <div class="form-container">
+                <form id="inscription-form" class="inscription-form">
+                    <div class="form-section">
+                        <h3>Informations de l'élève</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nom complet de l'élève</label>
+                                <input type="text" name="nom_eleve" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo de l'élève</label>
+                                <input type="file" name="photo_eleve" accept="image/*" onchange="previewImage(this)">
+                                <div class="image-preview" id="photo-preview"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Sexe</label>
+                                <select name="sexe" required>
+                                    <option value="">Choisir...</option>
+                                    <option value="M">Masculin</option>
+                                    <option value="F">Féminin</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date de naissance</label>
+                                <input type="date" name="date_naissance" required>
+                            </div>
+                            <div class="form-group">
+                                <label>École de provenance</label>
+                                <input type="text" name="ecole_provenance" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Pourcentage obtenu (%)</label>
+                                <input type="number" name="pourcentage" min="0" max="100" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Classe demandée</label>
+                                <select name="classe_demandee" required>
+                                    <option value="">Choisir...</option>
+                                    <option value="6e">6e</option>
+                                    <option value="5e">5e</option>
+                                    <option value="4e">4e</option>
+                                    <option value="3e">3e</option>
+                                    <option value="2nde">2nde</option>
+                                    <option value="1ere">1ère</option>
+                                    <option value="Tle">Tle</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Informations du tuteur</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nom du tuteur</label>
+                                <input type="text" name="nom_tuteur" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact du tuteur</label>
+                                <input type="tel" name="contact_tuteur" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <textarea name="adresse" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Dossiers à fournir</h3>
+                        <div class="file-upload-section">
+                            <div class="file-upload-item">
+                                <label>Certificat de naissance</label>
+                                <input type="file" name="certificat_naissance" accept=".pdf,.jpg,.jpeg,.png">
+                                <div class="file-name" id="certificat-name"></div>
+                            </div>
+                            <div class="file-upload-item">
+                                <label>Relevé de notes</label>
+                                <input type="file" name="releve_notes" accept=".pdf,.jpg,.jpeg,.png">
+                                <div class="file-name" id="releve-name"></div>
+                            </div>
+                            <div class="file-upload-item">
+                                <label>Autres documents</label>
+                                <input type="file" name="autres_documents" accept=".pdf,.jpg,.jpeg,.png">
+                                <div class="file-name" id="autres-name"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Soumettre l'inscription</button>
+                        <button type="button" onclick="showHome()" class="btn-secondary">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page de confirmation -->
+        <div id="confirmation-page" class="page">
+            <div class="confirmation-container">
+                <div class="confirmation-icon">✓</div>
+                <h2>Inscription enregistrée!</h2>
+                <p>Votre inscription a été soumise avec succès.</p>
+                <p>Numéro d'inscription: <strong id="numero-inscription"></strong></p>
+                <div class="confirmation-actions">
+                    <button onclick="showHome()" class="btn-primary">Retour à l'accueil</button>
+                    <button onclick="showListeInscrits()" class="btn-secondary">Voir les inscrits</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page des inscrits -->
+        <div id="liste-inscrits-page" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h2>Liste des Inscrits</h2>
+                </div>
+                <div class="nav-menu">
+                    <button onclick="showHome()" class="btn-nav">Retour</button>
+                </div>
+            </nav>
+            
+            <div class="liste-container">
+                <div class="search-filter">
+                    <input type="text" id="search-input" placeholder="Rechercher un élève..." onkeyup="filterInscrits()">
+                    <select id="filter-classe" onchange="filterInscrits()">
+                        <option value="">Toutes les classes</option>
+                        <option value="6e">6e</option>
+                        <option value="5e">5e</option>
+                        <option value="4e">4e</option>
+                        <option value="3e">3e</option>
+                        <option value="2nde">2nde</option>
+                        <option value="1ere">1ère</option>
+                        <option value="Tle">Tle</option>
+                    </select>
+                </div>
+                
+                <div class="table-container">
+                    <table id="inscrits-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Nom</th>
+                                <th>Classe</th>
+                                <th>École</th>
+                                <th>Pourcentage</th>
+                                <th>Tuteur</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inscrits-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
